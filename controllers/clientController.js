@@ -23,7 +23,53 @@ const showClient = async (req, res) => {
 
 
 const saveClient = async (req, res) => {
-  const client = new Client(req.body);
+
+  const {
+    name,
+    cnpj,
+    address,
+    latitude,
+    longitude,
+    business_line,
+    about,
+    contactName,
+    contactCel,
+    contactBusiness_position
+  } = req.body;
+
+  const reqImages = req.files;
+  console.log(reqImages);
+  let images = [];
+
+  reqImages.map(image => {
+    images.push(
+      {
+        path: image.filename,
+        url: `http://localhost:3333/uploads/${image.filename}`
+      }
+    );
+  });
+
+  const client = new Client(
+    {
+      name: name,
+      cnpj: cnpj,
+      address: address,
+      latitude: latitude,
+      longitude: longitude,
+      business_line: business_line,
+      about: about,
+      contact:
+      {
+        name: contactName,
+        cel: contactCel,
+        business_position: contactBusiness_position
+      },
+      images: images
+    }
+  );
+  // console.log(client);
+  //       res.status(200).send(client);
 
   client.save().then(
     doc => {

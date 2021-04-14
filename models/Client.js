@@ -10,8 +10,10 @@ const clientSchema = new mongoose.Schema({
   about: { type: String },
   contact: {
     name: { type: String, required: true },
-    phone: { type: String, required: true }
-  }
+    cel: { type: String, required: true },
+    business_position: { type: String, required: true }
+  },
+  images: []
 });
 
 module.exports = mongoose.model('Client', clientSchema);
