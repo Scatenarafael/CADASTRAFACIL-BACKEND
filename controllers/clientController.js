@@ -1,4 +1,6 @@
-const Client = require('../models/Client')
+const Client = require('../models/Client');
+const fs = require('fs');
+const path = require('path');
 
 const showAllClients = async (req, res) => {
   try {
@@ -13,9 +15,12 @@ const showAllClients = async (req, res) => {
 const showClient = async (req, res) => {
   const id = req.params.id;
   try {
-    let doc = await Client.find({ _id: id });
+    let doc = await Client.findOne({ _id: id });
+    
     console.log(doc);
+
     res.status(200).send(doc)
+
   } catch (error) {
     res.send(error.message);
   }
@@ -26,11 +31,11 @@ const saveClient = async (req, res) => {
 
   const {
     name,
-    cnpj,
+    cpfcnpj,
     address,
     latitude,
     longitude,
-    business_line,
+    businessline,
     about,
     contactName,
     contactCel,
@@ -48,16 +53,17 @@ const saveClient = async (req, res) => {
         url: `http://localhost:3333/uploads/${image.filename}`
       }
     );
+    return images;
   });
 
   const client = new Client(
     {
       name: name,
-      cnpj: cnpj,
+      cpfcnpj: cpfcnpj,
       address: address,
       latitude: latitude,
       longitude: longitude,
-      business_line: business_line,
+      businessline: businessline,
       about: about,
       contact:
       {
@@ -88,6 +94,11 @@ const deleteClient = async (req, res) => {
 
   try {
     let doc = await Client.findOneAndDelete({ _id: id });
+    doc.images.forEach(async (image) => {
+      // fs.unlinkSync(`${path.join(__dirname, '..', 'uploads') + image.path}`);
+
+    })
+
     res.status(200).send(doc);
   } catch (error) {
     res.send(error)

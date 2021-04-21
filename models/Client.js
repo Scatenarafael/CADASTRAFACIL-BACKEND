@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const clientSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  cnpj: { type: String },
+  cpfcnpj: { type: String },
   address: { type: String, required: true },
-  latitude: { type: Number},
-  longitude: { type: Number},
-  business_line: { type: String, required: true },
+  latitude: { type: Number },
+  longitude: { type: Number },
+  businessline: {type: String},
   about: { type: String },
   contact: {
     name: { type: String, required: true },

@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3333;
 const mongoose = require('mongoose');
-const path = require('path')
+const path = require('path');
+const cors = require('cors');
 
 const clientRoute = require('./routes/clientRoute')
-
 
 mongoose.connect('mongodb://localhost/cadastrafacil', { useUnifiedTopology: false, useUnifiedTopology: true, useNewUrlParser: true });
 
